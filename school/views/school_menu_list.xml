@@ -28,6 +28,10 @@
         <menuitem id="school_exams_menu" name="Exams" sequence="6">
             <menuitem id="school_exam_menu_action" action="school_exam_model_action" name="Exam"/>
         </menuitem>
+        <menuitem id="school_report_menu" name="Report" sequence="7">
+            <menuitem id="school_leave_information_menu_action" action="report_action_for_student_registration" name="Leave Information"/>
+            <menuitem id="school_student_information_menu_action" action="school_exam_model_action" name="Student Information"/>
+        </menuitem>
         <menuitem id="school_configuration_menu" name="Configuration" sequence="8">
             <menuitem id="school_manage_department_model_menu_action"
                       action="school_department_model_action" name="Department"/>

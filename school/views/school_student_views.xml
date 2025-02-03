@@ -47,6 +47,7 @@
         <field name="arch" type="xml">
             <form string="StudentRegistrationForm">
                 <header>
+                    <button name="your_button_function" string="My Button" type="object"/>
                     <button name="action_admission_button"
                             type="object" string="Admission" class="oe_highlight" invisible="state == 'registration'"/>
                     <field name="state" widget="statusbar" nolabel="1" statusbar_visible="draft,registration"/>
@@ -237,4 +238,15 @@
          <field name="context">{'create' : False, 'tree_view_ref':'school_student_admission_list_view',
                 'from_view_ref':'school_student_admission_form_view'}</field>
     </record>
+
+     <record id="report_action_for_student_registration" model="ir.actions.act_window">
+            <field name="name">Student Information</field>
+            <field name="res_model">student.registration</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="school_student_admission_list_view"/>
+            <field name="target">new</field>
+            <field name="context">{
+                'dialog_size' : 'medium',
+            }</field>
+        </record>
 </odoo>

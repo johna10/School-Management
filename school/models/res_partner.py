@@ -7,7 +7,7 @@ class SchoolTeacher(models.Model):
     _inherit = 'res.partner'
 
     email = fields.Char(required=True)
-    value = fields.Boolean()
+    value = fields.Boolean(default=False)
     partner = fields.Selection([('teacher', 'Teacher'), ('student', 'Student'),
                                 ('officestaff', 'Office Staff'), ('hod','Head of Department')],
                                string='Partner Type')
@@ -24,29 +24,29 @@ class SchoolTeacher(models.Model):
         """This method is used to create user for employee."""
         # user_ids = self.env['res.users'].search(['|', ('name', '=', self.name), ('email', '=', self.email)])
         # if not  user_ids:
-        # if self.partner == 'student':
-        #     pass
-        if self.value == True:
-            if self.partner == 'teacher':
-                user = self.env['res.users'].create([{
-                    'name': self.complete_name,
-                    'login': self.email,
-                    'partner_id': self.id,
-                    'groups_id': [
-                        Command.link(self.env.ref('base.group_user').id),
-                        Command.link(self.env.ref('school.teachers_group').id)],
-                }])
-                self.user_id = user.id
-            else:
-                user = self.env['res.users'].create([{
-                    'name': self.complete_name,
-                    'login': self.email,
-                    'partner_id': self.id,
-                    'groups_id': [
-                        Command.link(self.env.ref('base.group_user').id),
-                        Command.link(self.env.ref('school.staff_group').id)],
-                }])
-                self.user_id = user.id
+        if self.partner == 'student':
+            pass
+        # if self.value == True:
+        elif self.partner == 'teacher':
+            user = self.env['res.users'].create([{
+                'name': self.complete_name,
+                'login': self.email,
+                'partner_id': self.id,
+                'groups_id': [
+                    Command.link(self.env.ref('base.group_user').id),
+                    Command.link(self.env.ref('school.teachers_group').id)],
+            }])
+            self.user_id = user.id
+        else:
+            user = self.env['res.users'].create([{
+                'name': self.complete_name,
+                'login': self.email,
+                'partner_id': self.id,
+                'groups_id': [
+                    Command.link(self.env.ref('base.group_user').id),
+                    Command.link(self.env.ref('school.staff_group').id)],
+            }])
+            self.user_id = user.id
 
     _sql_constraints = [
         ('unique_email_inherited', 'unique(email)', "A partner with same Email already exists!")
